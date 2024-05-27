@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions for {{ month }}/{{ year }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Transactions for {{ month }}/{{ year }}</h1>
+    </header>
+    <section class="transactions-section">
+        <div class="summary">
+            <h2>Total Expenses: ${{ total_expenses }}</h2>
+            <h2>Total Incomes: ${{ total_incomes }}</h2>
+        </div>
+        <h3>Expenses:</h3>
+        <ul class="transactions-list">
+            {% for expense in expenses %}
+            <li>{{ expense.description }}: ${{ expense.amount }} ({{ expense.timestamp.strftime('%Y-%m-%d %H:%M') }})</li>
+            {% endfor %}
+        </ul>
+        <h3>Incomes:</h3>
+        <ul class="transactions-list">
+            {% for income in incomes %}
+            <li>{{ income.description }}: ${{ income.amount }} ({{ income.timestamp.strftime('%Y-%m-%d %H:%M') }})</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('home') }}" class="back-link">Back to Home</a>
+    </section>
+</body>
+</html>

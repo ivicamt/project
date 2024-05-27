@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transactions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Transactions</h1>
+    </header>
+    <section class="transactions-section">
+        <div class="transactions">
+            <h2>Expenses</h2>
+            <ul class="transactions-list">
+                {% for expense in expenses %}
+                <li>
+                    {{ expense.description }}: {{ expense.amount }} ({{ expense.timestamp.strftime('%Y-%m-%d %H:%M') }})
+                    <form action="{{ url_for('delete_expense', expense_id=expense.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="transactions">
+            <h2>Incomes</h2>
+            <ul class="transactions-list">
+                {% for income in incomes %}
+                <li>
+                    {{ income.description }}: {{ income.amount }} ({{ income.timestamp.strftime('%Y-%m-%d %H:%M') }})
+                    <form action="{{ url_for('delete_income', income_id=income.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{{ url_for('home') }}" class="back-link">Back to Home</a>
+    </section>
+</body>
+</html>

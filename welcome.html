@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div id="welcome-2" class="fade-in right">
+        <p><i class="fas fa-chart-line"></i> Welcome to our cutting-edge expense tracker app, designed to revolutionize the way you manage your finances. With our intuitive platform, you can effortlessly track your expenses and income, gaining a clear understanding of your financial landscape at a glance. Whether you're adding, removing, or viewing transactions, our app streamlines the process, ensuring every financial move is seamlessly recorded. But that's just the beginning.</p>
+    </div>
+
+    <div id="welcome-3" class="fade-in left">
+        <p><i class="fas fa-wallet"></i> Dive deeper into your spending habits with customizable budget tracking, insightful reports, and predictive analysis. Harness the power of receipt scanning, collaborative features, and multi-currency support to truly take control of your financial journey. Join us today and embark on a path towards financial empowerment.</p>
+    </div>
+
+    <div id="welcome-4" class="fade-in">
+        <p><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a></p>
+        <p><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 400); // Adjust the delay as needed
+            });
+        });
+    </script>
+</body>
+</html>

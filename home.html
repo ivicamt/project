@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ current_user.username }}!</h1>
+        <p class="date">Today's date: {{ date }}</p>
+        <form action="/" method="get" class="city-form">
+            <label for="city">Select City:</label>
+            <select id="city" name="city">
+                <option value="London">London</option>
+                <option value="New York">New York</option>
+                <option value="Paris">Paris</option>
+                <!-- Add more options as needed -->
+            </select>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        {% if weather %}
+        <div class="weather-info">
+            <p>Weather in {{ weather.name }}: {{ weather.weather[0].description }}, Temperature: {{ (weather.main.temp - 273.15) | round(2) }}°C</p>
+        </div>
+        {% endif %}
+    </header>
+
+    {% if current_user.is_authenticated %}
+    <section class="overview">
+        <h2>Overview</h2>
+        <div class="summary">
+            <p>Total Incomes: <span class="income-amount">MKD {{ total_incomes }}</span></p>
+            <p>Total Expenses: <span class="expense-amount">MKD {{ total_expenses }}</span></p>
+            <p>Balance: <span class="balance-amount">MKD {{ balance }}</span></p>
+        </div>
+    </section>
+
+    <section class="budgets">
+        <h2>Budgets</h2>
+        <table class="budget-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for budget in budgets %}
+                <tr>
+                    <td>{{ budget.category }}</td>
+                    <td>MKD {{ budget.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="alerts">
+        <h2>Alerts</h2>
+        <ul class="alert-list">
+            {% for alert in alerts %}
+            <li>{{ alert.message }} - {{ alert.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="transactions">
+        <h2>Transactions</h2>
+        <div class="expenses">
+            <h3>Expenses</h3>
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>MKD {{ expense.amount }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td>{{ expense.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="incomes">
+            <h3>Incomes</h3>
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for income in incomes %}
+                    <tr>
+                        <td>MKD {{ income.amount }}</td>
+                        <td>{{ income.description }}</td>
+                        <td>{{ income.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="actions">
+        <h2>Actions</h2>
+        <ul class="action-list">
+            <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+            <li><a href="{{ url_for('add_income') }}">Add Income</a></li>
+            <li><a href="{{ url_for('set_budget') }}">Set Budget</a></li>
+            <li><a href="{{ url_for('view_budgets') }}">View Budget</a></li>
+            <li><a href="{{ url_for('view_transactions') }}">View Transactions</a></li>
+            <li><a href="{{ url_for('visualize') }}">Visual Pie</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </section>
+    {% else %}
+    <p><a href="{{ url_for('login') }}" class="auth-link">Login</a> or <a href="{{ url_for('register') }}" class="auth-link">Register</a></p>
+    {% endif %}
+
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+    
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

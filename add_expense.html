@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Add Expense</h1>
+    </header>
+    <section class="form-section">
+        <form method="POST" action="{{ url_for('add_expense') }}">
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <button type="submit" class="submit-btn">Add Expense</button>
+        </form>
+        <a href="{{ url_for('home') }}" class="back-link">Back to Home</a>
+    </section>
+</body>
+</html>
